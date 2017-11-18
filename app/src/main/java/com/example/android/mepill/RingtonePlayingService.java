@@ -79,7 +79,7 @@ public class RingtonePlayingService extends Service {
             // set up a pending intent
             PendingIntent pendingIntentMainAct = PendingIntent.getActivity(this, 0, intentMainActivity, 0);
 
-            // make the notification parameters TEST 3
+            // make the notification parameters 
             Notification notificationPopup = new Notification.Builder(this)
                     .setContentTitle("An alarm is going off")
                     .setContentText("Click me")
