@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
                 // to prevent triggering the alarm if time passed for the day
                 if (calendar.before(Calendar.getInstance())) {
                     calendar.add(Calendar.HOUR_OF_DAY, 24);
+
                 }
 
 
