@@ -1,7 +1,7 @@
 package com.example.android.mepill;
 
 /**
- * Created by Elena on 16-Nov-17.
+ * Created by Elena on 13-Nov-17.
  */
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -12,20 +12,19 @@ import android.util.Log;
 public class AlarmReceiver extends BroadcastReceiver{
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.i("AlarmReceiver", "We are in the receiver");
+        Log.i("AlarmReceiver", "This is receiver");
 
-        //fetch extra string from the intent
-        String getYourString = intent.getExtras().getString("extra");
+        //get "extra" String from the intent
+        String intentString = intent.getExtras().getString("extra");
+        Log.i("The key is: ", intentString);
 
-        Log.i("What is the key?", getYourString);
+        //make an intent to the ringtone service
+        Intent serviceIntent = new Intent (context, PlayingService.class);
 
-        //create an intent to the ringtone service
-        Intent serviceIntent = new Intent (context, RingtonePlayingService.class);
+        //put the "extra" String from MainActivity to the PlayingService
+        serviceIntent.putExtra("extra", intentString);
 
-        //pass the extra string from MainActivity to the RingtonePlayingService
-        serviceIntent.putExtra("extra", getYourString);
-
-        //start the ringtone service
+        //begin the ringtone service
         context.startService(serviceIntent);
 
 

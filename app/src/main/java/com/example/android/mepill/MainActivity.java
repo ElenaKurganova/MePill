@@ -21,7 +21,9 @@ public class MainActivity extends AppCompatActivity {
 
     //Alarm manager
     private AlarmManager alarmManager;
-    private TimePicker alarmTimePicker;
+
+    //TimePicker to pick a time
+    private TimePicker timePicker;
     private TextView textToUpdate;
     private Context context;
     private PendingIntent pendingIntent;
@@ -50,21 +52,21 @@ public class MainActivity extends AppCompatActivity {
 
         initializeVariables();
 
-        // initialize the start button
-        final Button alarm_on = findViewById(R.id.alarm_on);
+        // initialize the OK button
+        final Button alarmOn = findViewById(R.id.alarm_activate);
 
         // create an intent to the Alarm Receiver class
         final Intent intent = new Intent(this.context, AlarmReceiver.class);
 
-        // create onClick listener to start an alarm
-        alarm_on.setOnClickListener(new View.OnClickListener() {
+        // make onClick listener to activate the alarm
+        alarmOn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i("This is log", "??????????????????????7787");
+                Log.i("This is log", "???????");
 
                 // get the int values of the hours and minutes
-                int hoursInt = alarmTimePicker.getHour();
-                int minutesInt = alarmTimePicker.getMinute();
+                int hoursInt = timePicker.getHour();
+                int minutesInt = timePicker.getMinute();
 
                 // create an instance of calendar
                 final Calendar calendar = Calendar.getInstance();
@@ -75,70 +77,60 @@ public class MainActivity extends AppCompatActivity {
                 calendar.set(Calendar.SECOND, 0);
                 calendar.set(Calendar.MILLISECOND, 0);
 
-                // to prevent triggering the alarm if time passed for the day
+                // to prevent triggering the alarm if time already passed for the day
                 if (calendar.before(Calendar.getInstance())) {
                     Log.d("This is log", "Adding a day to run tomorrow");
                     calendar.add(Calendar.DATE, 1);
                 }
 
-
-
-
-
-                // convert int values to Strings
+                // convert int values for hour and minute to Strings
                 String hour = String.valueOf(hoursInt);
                 String minute = String.valueOf(minutesInt);
 
-
                 if (minutesInt < 10) {
-                    // 11.6 --> 11.06
+                    // Change minutes format(11:6 => 11:06)
                     minute = "0" + minutesInt;
                 }
 
-                // method that changes the update text Textbox
-                set_alarm_text("Alarm set to " + hour + ":" + minute);
+                // update the text in the Textbox
+                setReminderStatus("Reminder set to " + hour + ":" + minute);
 
-                // put in extra string into my intent, tells the clock that you pressed the "alarm on" button
-                intent.putExtra("extra", "alarm on");
+                // send "extra" String into the intent, tells the watch user pressed the "OK" button
+                intent.putExtra("extra", "reminder on");
 
-
-                // create a pending intent that delays the intent until the specified calendar time
+                // make a pending intent to delay the intent until the particular calendar time
                 pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
                 Log.i("When to run", "Planning to run at " + calendar.toString());
+
                 // setup the alarm manager
                 alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-
             }
         });
 
-        // initialize the stop button
-        Button alarm_off = findViewById(R.id.alarm_off);
+        // initialize the CANCEL button
+        Button alarmOff = findViewById(R.id.cancel_alarm);
 
-        // create onClick listener to turn off an alarm
-        alarm_off.setOnClickListener(new View.OnClickListener()
-
+        // make onClick listener to cancel the reminder
+        alarmOff.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v) {
 
-
-                // method that changes the update text Textbox
-                set_alarm_text("Alarm off");
+                // update text regarding reminder status in the Textbox
+                setReminderStatus("Reminder off");
 
                 // cancel the alarm
                 alarmManager.cancel(pendingIntent);
 
-                // put extra string to my intent, tells the clock that you pressed "alarm off" button
-                intent.putExtra("extra", "alarm off");
+                // send "extra" String to the intent, tells the watch user pressed "CANCEL" button
+                intent.putExtra("extra", "reminder off");
 
-
-                // stop the ringtone
+                // stop playing the ringtone
                 sendBroadcast(intent);
             }
 
         });
-
     }
 
     private void initializeVariables() {
@@ -146,16 +138,14 @@ public class MainActivity extends AppCompatActivity {
         alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
         // initialize timePicker
-        alarmTimePicker = findViewById(R.id.timePicker2);
-        alarmTimePicker.setIs24HourView(true);
+        timePicker = findViewById(R.id.timePicker2);
+        timePicker.setIs24HourView(true);
 
-        // initialize update text box
-        textToUpdate = findViewById(R.id.updated_text);
+        // initialize text view to be updated
+        textToUpdate = findViewById(R.id.text_to_update);
     }
 
-    private void set_alarm_text(String output) {
+    private void setReminderStatus(String output) {
         textToUpdate.setText(output);
-
-
     }
 }

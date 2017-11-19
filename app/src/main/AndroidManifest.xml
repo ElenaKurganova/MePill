@@ -27,7 +27,7 @@
         </activity>
         <receiver android:name=".AlarmReceiver"/>
 
-        <service android:name=".RingtonePlayingService"
+        <service android:name=".PlayingService"
             android:enabled="true"
 
         />
