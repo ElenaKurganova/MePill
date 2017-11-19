@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         alarm.setHour(11);
         alarm.setMedicine("panadol");
         alarm.setMinute(55);
-        alarm.setScheduleName("some fake alarm");
+        alarm.setQuantity(1);
 
         alarmDbHelper.createRow(alarm);
         alarmDbHelper.createRow(alarm);

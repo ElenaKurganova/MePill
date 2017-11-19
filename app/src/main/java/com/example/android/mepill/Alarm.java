@@ -6,7 +6,7 @@ package com.example.android.mepill;
 
 public class Alarm {
     private long id;
-    private String scheduleName;
+    private int quantity;
     private String medicine;
     private int hour;
     private int minute;
@@ -19,12 +19,12 @@ public class Alarm {
         this.id = id;
     }
 
-    public String getScheduleName() {
-        return scheduleName;
+    public int getQuantity() {
+        return quantity;
     }
 
-    public void setScheduleName(String scheduleName) {
-        this.scheduleName = scheduleName;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     public String getMedicine() {

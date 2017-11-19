@@ -13,9 +13,9 @@ import java.io.FileNotFoundException;
 
 public class AlarmDbHelper {
 
-    private static final String DATABASE_CREATE =
-            "create table IF NOT EXISTS ALARM(id integer primary key autoincrement, "
-                    + "scheduleName text not null,"
+    private static final String TABLE_CREATE =
+            "create table if not exists ALARM(id integer primary key autoincrement, "
+                    + "quantity integer not null,"
                     + " medicine text not null,"
                     + " hour integer not null,"
                     + " minute integer not null"
@@ -31,7 +31,7 @@ public class AlarmDbHelper {
 
     public AlarmDbHelper(Context ctx) {
         db = ctx.openOrCreateDatabase(DATABASE_NAME, Context.MODE_PRIVATE, null);
-        db.execSQL(DATABASE_CREATE);
+        db.execSQL(TABLE_CREATE);
     }
 
     public void close() {
@@ -40,7 +40,7 @@ public class AlarmDbHelper {
 
     public void createRow(Alarm alarm) {
         ContentValues initialValues = new ContentValues();
-        initialValues.put("scheduleName", alarm.getScheduleName());
+        initialValues.put("quantity", alarm.getQuantity());
         initialValues.put("medicine", alarm.getMedicine());
         initialValues.put("hour", alarm.getHour());
         initialValues.put("minute", alarm.getMinute());
