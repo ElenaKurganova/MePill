@@ -68,7 +68,7 @@ public class PlayingService extends Service {
                     getSystemService(NOTIFICATION_SERVICE);
 
             // set up an intent that goes to the Main activity
-            Intent intentMainActivity = new Intent(this.getApplicationContext(), MainActivity.class);
+            Intent intentMainActivity = new Intent(this.getApplicationContext(), TimePickerActivity.class);
 
             // set up a pending intent
             PendingIntent pendingIntentMainAct = PendingIntent.getActivity(this, 0, intentMainActivity, 0);

@@ -21,7 +21,7 @@ public class AlarmReceiver extends BroadcastReceiver{
         //make an intent to the ringtone service
         Intent serviceIntent = new Intent (context, PlayingService.class);
 
-        //put the "extra" String from MainActivity to the PlayingService
+        //put the "extra" String from TimePickerActivity to the PlayingService
         serviceIntent.putExtra("extra", intentString);
 
         //begin the ringtone service

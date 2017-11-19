@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class PillRegister extends AppCompatActivity {
+public class AddPillAlarmActivity extends AppCompatActivity {
     FloatingActionButton fabDone;
 
     String medicineName;
@@ -35,7 +35,7 @@ public class PillRegister extends AppCompatActivity {
         pickTimeButton.setOnClickListener(new View.OnClickListener(){
         @Override
         public void onClick (View view){
-            startActivity(new Intent(PillRegister.this, MainActivity.class));
+            startActivity(new Intent(AddPillAlarmActivity.this, TimePickerActivity.class));
         }
         });
 

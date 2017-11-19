@@ -18,7 +18,7 @@ import android.widget.TimePicker;
 import com.idescout.sql.SqlScoutServer;
 
 
-public class MainActivity extends AppCompatActivity {
+public class TimePickerActivity extends AppCompatActivity {
 
     //Alarm manager
     private AlarmManager alarmManager;
@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra("extra", "reminder on");
 
                 // make a pending intent to delay the intent until the particular calendar time
-                pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                pendingIntent = PendingIntent.getBroadcast(TimePickerActivity.this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
                 Log.i("When to run", "Planning to run at " + calendar.toString());
 

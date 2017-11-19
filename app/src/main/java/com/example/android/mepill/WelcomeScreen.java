@@ -6,7 +6,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.TextView;
 
 public class WelcomeScreen extends AppCompatActivity {
     FloatingActionButton fab;
@@ -24,7 +23,7 @@ public class WelcomeScreen extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(WelcomeScreen.this, PillRegister.class));
+                startActivity(new Intent(WelcomeScreen.this, AddPillAlarmActivity.class));
             }
         });
     }
