@@ -2,12 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.android.mepill">
 
-    <application >
+    <application>
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme"
-            android:launchMode="singleTop">
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme">
             <intent-filter android:order="1">
                 <action android:name="android.intent.action.VIEW" />
 
@@ -19,19 +19,32 @@
                     android:pathPattern="/.*"
                     android:scheme="https" />
             </intent-filter>
+        </activity>
+
+        <receiver android:name=".AlarmReceiver" />
+
+        <service
+            android:name=".PlayingService"
+            android:enabled="true" />
+
+        <activity
+            android:name=".WelcomeScreen"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <receiver android:name=".AlarmReceiver"/>
-
-        <service android:name=".PlayingService"
-            android:enabled="true"
-
-        />
-
+        <activity
+            android:name=".PillRegister"
+            android:label="@string/title_activity_pill_register"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".PillList"
+            android:label="@string/title_activity_pill_list"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>
