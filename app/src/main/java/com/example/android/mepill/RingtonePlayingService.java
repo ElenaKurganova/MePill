@@ -17,11 +17,13 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.Toast;
 
+import junit.framework.Assert;
+
 public class RingtonePlayingService extends Service {
 
-    MediaPlayer mediaSong;
-    int startId;
-    boolean isRunning;
+    private MediaPlayer mediaSong;
+    private int startId;
+    private boolean isRunning;
 
 
     @Nullable
@@ -79,7 +81,7 @@ public class RingtonePlayingService extends Service {
             // set up a pending intent
             PendingIntent pendingIntentMainAct = PendingIntent.getActivity(this, 0, intentMainActivity, 0);
 
-            // make the notification parameters 
+            // make the notification parameters
             Notification notificationPopup = new Notification.Builder(this)
                     .setContentTitle("An alarm is going off")
                     .setContentText("Click me")

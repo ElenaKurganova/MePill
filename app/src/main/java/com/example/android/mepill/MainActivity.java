@@ -14,40 +14,47 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.idescout.sql.SqlScoutServer;
+
 
 public class MainActivity extends AppCompatActivity {
 
     //Alarm manager
-    AlarmManager alarmManager;
-    TimePicker alarmTimePicker;
-    TextView updateText;
-    Context context;
-    PendingIntent pendingIntent;
+    private AlarmManager alarmManager;
+    private TimePicker alarmTimePicker;
+    private TextView textToUpdate;
+    private Context context;
+    private PendingIntent pendingIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        SqlScoutServer.create(this, getPackageName());
+
+        AlarmDbHelper alarmDbHelper = new AlarmDbHelper(this);
+
+        //TO DELETE
+        Alarm alarm = new Alarm();
+        alarm.setHour(11);
+        alarm.setMedicine("panadol");
+        alarm.setMinute(55);
+        alarm.setScheduleName("some fake alarm");
+
+        alarmDbHelper.createRow(alarm);
+        alarmDbHelper.createRow(alarm);
+        //END TO DELETE
+
         setContentView(R.layout.activity_main);
         this.context = this;
 
-        //initialize alarm manager
-        alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        initializeVariables();
 
-        // initialize timePicker
-        alarmTimePicker = (TimePicker) findViewById(R.id.timePicker2);
-        alarmTimePicker.setIs24HourView(true);
-
-        // initialize update text box
-        updateText = (TextView) findViewById(R.id.updated_text);
-
-        // create an instance of calendar
-        final Calendar calendar = Calendar.getInstance();
+        // initialize the start button
+        final Button alarm_on = findViewById(R.id.alarm_on);
 
         // create an intent to the Alarm Receiver class
         final Intent intent = new Intent(this.context, AlarmReceiver.class);
-
-        // initialize the start button
-        final Button alarm_on = (Button) findViewById(R.id.alarm_on);
 
         // create onClick listener to start an alarm
         alarm_on.setOnClickListener(new View.OnClickListener() {
@@ -55,31 +62,37 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Log.i("This is log", "??????????????????????7787");
 
+                // get the int values of the hours and minutes
+                int hoursInt = alarmTimePicker.getHour();
+                int minutesInt = alarmTimePicker.getMinute();
+
+                // create an instance of calendar
+                final Calendar calendar = Calendar.getInstance();
 
                 // setting calendar instance with the hour and minutes picked on the Time Picker
-                calendar.set(Calendar.HOUR_OF_DAY, alarmTimePicker.getHour());
-                calendar.set(Calendar.MINUTE, alarmTimePicker.getMinute());
+                calendar.set(Calendar.HOUR_OF_DAY, hoursInt);
+                calendar.set(Calendar.MINUTE, minutesInt);
+                calendar.set(Calendar.SECOND, 0);
+                calendar.set(Calendar.MILLISECOND, 0);
 
                 // to prevent triggering the alarm if time passed for the day
                 if (calendar.before(Calendar.getInstance())) {
-                    calendar.add(Calendar.HOUR_OF_DAY, 24);
-
+                    Log.d("This is log", "Adding a day to run tomorrow");
+                    calendar.add(Calendar.DATE, 1);
                 }
 
 
-                // get the int values of the hours and minutes
-                int hours_int = alarmTimePicker.getHour();
-                int minutes_int = alarmTimePicker.getMinute();
+
 
 
                 // convert int values to Strings
-                String hour = String.valueOf(hours_int);
-                String minute = String.valueOf(minutes_int);
+                String hour = String.valueOf(hoursInt);
+                String minute = String.valueOf(minutesInt);
 
 
-                if (minutes_int < 10) {
+                if (minutesInt < 10) {
                     // 11.6 --> 11.06
-                    minute = "0" + minutes_int;
+                    minute = "0" + minutesInt;
                 }
 
                 // method that changes the update text Textbox
@@ -92,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
                 // create a pending intent that delays the intent until the specified calendar time
                 pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-
+                Log.i("When to run", "Planning to run at " + calendar.toString());
                 // setup the alarm manager
                 alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
 
@@ -100,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // initialize the stop button
-        Button alarm_off = (Button) findViewById(R.id.alarm_off);
+        Button alarm_off = findViewById(R.id.alarm_off);
 
         // create onClick listener to turn off an alarm
         alarm_off.setOnClickListener(new View.OnClickListener()
@@ -128,8 +141,20 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void initializeVariables() {
+        //initialize alarm manager
+        alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+
+        // initialize timePicker
+        alarmTimePicker = findViewById(R.id.timePicker2);
+        alarmTimePicker.setIs24HourView(true);
+
+        // initialize update text box
+        textToUpdate = findViewById(R.id.updated_text);
+    }
+
     private void set_alarm_text(String output) {
-        updateText.setText(output);
+        textToUpdate.setText(output);
 
 
     }
