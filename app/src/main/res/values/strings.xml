@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">MePill</string>
     <string name="title_activity_welcome_screen">WelcomeScreen</string>
-    <string name="title_activity_pill_register">PillRegister</string>
+    <string name="title_activity_pill_register">Pill Register</string>
     <string name="title_activity_pill_list">PillList</string>
+    <string name="title_activity_timepicker_activity">Pick reminder time</string>
 </resources>
