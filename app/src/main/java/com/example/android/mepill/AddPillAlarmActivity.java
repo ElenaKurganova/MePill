@@ -88,7 +88,7 @@ public class AddPillAlarmActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(AddPillAlarmActivity.this, WelcomeScreen.class));
+                startActivity(new Intent(AddPillAlarmActivity.this, WelcomeScreenView.class));
 
             }
         });

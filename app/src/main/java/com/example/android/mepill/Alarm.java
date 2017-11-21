@@ -4,6 +4,8 @@ package com.example.android.mepill;
  * Created by Elena on 19-Nov-17.
  */
 
+
+// Alarm Model class
 public class Alarm {
     private long id;
     private int quantity;

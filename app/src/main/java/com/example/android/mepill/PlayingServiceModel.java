@@ -14,7 +14,7 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-public class PlayingService extends Service {
+public class PlayingServiceModel extends Service {
 
     private MediaPlayer player;
     private int triggerId;

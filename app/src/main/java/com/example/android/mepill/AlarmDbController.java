@@ -11,7 +11,7 @@ import java.io.FileNotFoundException;
  * Created by Elena on 19-Nov-17.
  */
 
-public class AlarmDbHelper {
+public class AlarmDbController {
 
     private static final String TABLE_CREATE =
             "create table if not exists ALARM(id integer primary key autoincrement, "
@@ -29,7 +29,7 @@ public class AlarmDbHelper {
 
     private SQLiteDatabase db;
 
-    public AlarmDbHelper(Context ctx) {
+    public AlarmDbController(Context ctx) {
         db = ctx.openOrCreateDatabase(DATABASE_NAME, Context.MODE_PRIVATE, null);
         db.execSQL(TABLE_CREATE);
     }

@@ -12,7 +12,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -42,21 +41,9 @@ public class TimePickerActivity extends AppCompatActivity {
 
         SqlScoutServer.create(this, getPackageName());
 
-        AlarmDbHelper alarmDbHelper = new AlarmDbHelper(this);
-
-        //TO DELETE
-        Alarm alarm = new Alarm();
-        alarm.setHour(11);
-        alarm.setMedicine("panadol");
-        alarm.setMinute(55);
-        alarm.setQuantity(1);
-
-        alarmDbHelper.createRow(alarm);
-        alarmDbHelper.createRow(alarm);
-        //END TO DELETE
+        AlarmDbController alarmDbHelper = new AlarmDbController(this);
 
         setContentView(R.layout.activity_main);
-
 
         initializeVariables();
 
@@ -64,7 +51,7 @@ public class TimePickerActivity extends AppCompatActivity {
         final Button alarmOn = findViewById(R.id.alarm_activate);
 
         // create an intent to the Alarm Receiver class
-        final Intent intent = new Intent(context, AlarmReceiver.class);
+        final Intent intent = new Intent(context, AlarmReceiverController.class);
 
         // make onClick listener to activate the alarm
         alarmOn.setOnClickListener(new View.OnClickListener() {
