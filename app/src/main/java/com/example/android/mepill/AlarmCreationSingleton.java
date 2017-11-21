@@ -9,8 +9,8 @@ public class AlarmCreationSingleton {
     private static AlarmCreationSingleton INSTANCE = null;
     private int quantity;
     private String medicine;
-    private int hour;
-    private int minute;
+    private int hour = -1;
+    private int minute = -1;
 
     private AlarmCreationSingleton() {
 

@@ -44,7 +44,7 @@
             tools:layout_editor_absoluteY="85dp" />
 
         <EditText
-            android:id="@+id/quantity"
+            android:id="@+id/quantityName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -59,13 +59,21 @@
             tools:layout_editor_absoluteX="0dp"
             tools:layout_editor_absoluteY="40dp" />
 
+        <TextView
+            android:id="@+id/text_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15sp"
+            android:text="hh:mm"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="40dp" />
+
         <Button
             android:id="@+id/pick_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5sp"
-            android:text="Pick time" />
-
+            android:layout_marginTop="15sp"
+            android:text="Set time" />
 
     </LinearLayout>
 

@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -19,6 +20,8 @@ import com.idescout.sql.SqlScoutServer;
 
 
 public class TimePickerActivity extends AppCompatActivity {
+    private int hour;
+    private int minute;
 
     //Alarm manager
     private AlarmManager alarmManager;
@@ -26,8 +29,8 @@ public class TimePickerActivity extends AppCompatActivity {
     //TimePicker to pick a time
     private TimePicker timePicker;
     private TextView textToUpdate;
-    private Context context;
     private PendingIntent pendingIntent;
+    private Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +56,7 @@ public class TimePickerActivity extends AppCompatActivity {
         //END TO DELETE
 
         setContentView(R.layout.activity_main);
-        this.context = this;
+
 
         initializeVariables();
 
@@ -61,7 +64,7 @@ public class TimePickerActivity extends AppCompatActivity {
         final Button alarmOn = findViewById(R.id.alarm_activate);
 
         // create an intent to the Alarm Receiver class
-        final Intent intent = new Intent(this.context, AlarmReceiver.class);
+        final Intent intent = new Intent(context, AlarmReceiver.class);
 
         // make onClick listener to activate the alarm
         alarmOn.setOnClickListener(new View.OnClickListener() {
@@ -70,15 +73,19 @@ public class TimePickerActivity extends AppCompatActivity {
                 Log.i("This is log", "???????");
 
                 // get the int values of the hours and minutes
-                int hoursInt = timePicker.getHour();
-                int minutesInt = timePicker.getMinute();
+                hour = timePicker.getHour();
+                minute = timePicker.getMinute();
+
+                //Change the int values and launch intent to AddPillAlarmActivity
+                AlarmCreationSingleton.getInstance().setHour(hour);
+                AlarmCreationSingleton.getInstance().setMinute(minute);
 
                 // create an instance of calendar
                 final Calendar calendar = Calendar.getInstance();
 
-                // setting calendar instance with the hour and minutes picked on the Time Picker
-                calendar.set(Calendar.HOUR_OF_DAY, hoursInt);
-                calendar.set(Calendar.MINUTE, minutesInt);
+                // setting calendar instance with the hours and minutes picked on the Time Picker
+                calendar.set(Calendar.HOUR_OF_DAY, hour);
+                calendar.set(Calendar.MINUTE, minute);
                 calendar.set(Calendar.SECOND, 0);
                 calendar.set(Calendar.MILLISECOND, 0);
 
@@ -88,17 +95,17 @@ public class TimePickerActivity extends AppCompatActivity {
                     calendar.add(Calendar.DATE, 1);
                 }
 
-                // convert int values for hour and minute to Strings
-                String hour = String.valueOf(hoursInt);
-                String minute = String.valueOf(minutesInt);
+                // convert int values for hours and minutes to Strings
+                String hours = String.valueOf(hour);
+                String minutes = String.valueOf(minute);
 
-                if (minutesInt < 10) {
+                if (minute < 10) {
                     // Change minutes format(11:6 => 11:06)
-                    minute = "0" + minutesInt;
+                    minutes = "0" + minutes;
                 }
 
                 // update the text in the Textbox
-                setReminderStatus("Reminder set to " + hour + ":" + minute);
+                setReminderStatus("Reminder set to " + hours + ":" + minutes);
 
                 // send "extra" String into the intent, tells the watch user pressed the "OK" button
                 intent.putExtra("extra", "reminder on");
@@ -110,6 +117,10 @@ public class TimePickerActivity extends AppCompatActivity {
 
                 // setup the alarm manager
                 alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+
+                Intent intentTwo = new Intent(context,AddPillAlarmActivity.class);
+                context.startActivity(intentTwo);
+
             }
         });
 
@@ -117,8 +128,7 @@ public class TimePickerActivity extends AppCompatActivity {
         Button alarmOff = findViewById(R.id.cancel_alarm);
 
         // make onClick listener to cancel the reminder
-        alarmOff.setOnClickListener(new View.OnClickListener()
-        {
+        alarmOff.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
