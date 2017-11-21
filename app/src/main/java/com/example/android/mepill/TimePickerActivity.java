@@ -143,6 +143,8 @@ public class TimePickerActivity extends AppCompatActivity {
 
                 // stop playing the ringtone
                 sendBroadcast(intent);
+
+                startActivity(new Intent(TimePickerActivity.this, AddPillAlarmActivity.class));
             }
 
         });
